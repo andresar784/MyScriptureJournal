@@ -1,0 +1,68 @@
+﻿@page
+@model MyScriptureJournal.Pages.Scriptures.IndexModel
+
+@{
+    ViewData["Title"] = "Scripture Journal";
+}
+
+<h1>Homepage</h1>
+ 
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form method="get" asp-page="./Index">
+    <p>
+        Book:
+        <select asp-for="BookName" asp-items="Model.Books">
+            <option value="">All Books</option>
+        </select>
+        Keyword: <input type="text" asp-for="SearchString" />
+        Sort by:
+        <select asp-for="@Model.SortOption">
+            <option value="book">Book</option>
+            <option value="date">Date Added</option>
+        </select>
+        <button type="submit">Apply</button>
+    </p>
+</form>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Anotation[0].Record)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anotation[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anotation[0].Book)
+            </th>
+           
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Anotation) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Record)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
